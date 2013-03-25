@@ -1,8 +1,8 @@
-#include <cstdio>
-#include <cstring>
+#include <cstdlib>
+#include <iostream>
 
 int main(int argc, const char *argv[])
 {
-	cout << "Hello, GOL";
-	return 0;
+	cout << "Hello, GolGol";
+	return EXIT_SUCCESS;
 }
