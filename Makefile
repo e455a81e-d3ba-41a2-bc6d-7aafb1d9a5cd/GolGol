@@ -1,5 +1,5 @@
 CC=g++
-NAME=fairy
+NAME=golgol
 DEBUG=-g3 -D_DEBUG=1 -O
 CFLAGS=-Wall -Wextra -Wconversion -std=c++0x
 LFLAGS=-lcairo -lgtk
@@ -14,8 +14,7 @@ ASM=$(SRC:.cpp=.s)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $(NAME) $(LFLAGS) # program
-	#ar rcs lib$(NAME).a $(OBJ) # static library
+	$(CC) $(OBJ) -o $(NAME) $(LFLAGS)
 
 clean:
 	rm -f $(OBJ) lib$(NAME).a
