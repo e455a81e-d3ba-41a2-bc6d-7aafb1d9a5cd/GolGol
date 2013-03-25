@@ -17,7 +17,7 @@ $(NAME): $(OBJ)
 	$(CC) $(OBJ) -o $(NAME) $(LFLAGS)
 
 clean:
-	rm -f $(OBJ) lib$(NAME).a
+	rm -f $(OBJ) $(NAME)
 
 dist:
 	cd ..; tar czf $(ARCHIVE).tar.gz $(NAME); mv $(ARCHIVE).tar.gz $(NAME)
