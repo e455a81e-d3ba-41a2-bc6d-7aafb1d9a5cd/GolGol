@@ -1,8 +1,8 @@
 CC=g++
-NAME=fairy
+NAME=golgol
 DEBUG=-g3 -D_DEBUG=1 -O
-CFLAGS=-Wall -Wextra -Wconversion -std=c++0x
-LFLAGS=-lcairo -lgtk
+CFLAGS=-Wall -Wextra -Wconversion -std=c++0x $(shell pkg-config --cflags gtk+-3.0)
+LFLAGS=$(shell pkg-config --libs gtk+-3.0)
 VERSION=0.1
 ARCHIVE=$(NAME)-$(VERSION)
 
@@ -14,11 +14,10 @@ ASM=$(SRC:.cpp=.s)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $(NAME) $(LFLAGS) # program
-	#ar rcs lib$(NAME).a $(OBJ) # static library
+	$(CC) $(OBJ) -o $(NAME) $(LFLAGS)
 
 clean:
-	rm -f $(OBJ) lib$(NAME).a
+	rm -f $(OBJ) $(NAME)
 
 dist:
 	cd ..; tar czf $(ARCHIVE).tar.gz $(NAME); mv $(ARCHIVE).tar.gz $(NAME)
