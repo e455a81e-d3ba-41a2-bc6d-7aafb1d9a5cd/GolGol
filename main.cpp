@@ -3,6 +3,6 @@
 
 int main(int argc, const char *argv[])
 {
-	cout << "Hello, GolGol";
+	std::cout << "Hello, GolGol";
 	return EXIT_SUCCESS;
 }
