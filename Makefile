@@ -1,7 +1,7 @@
 CC=g++
 NAME=golgol
 DEBUG=-g3 -D_DEBUG=1 -O
-CFLAGS=-Wall -Wextra -Wconversion -std=c++0x $(shell pkg-config --cflags gtk+-3.0)
+CFLAGS=-Wall -Wextra -Wconversion -std=c++0x $(shell pkg-config --cflags gtk+-3.0) -Iinclude
 LFLAGS=$(shell pkg-config --libs gtk+-3.0)
 VERSION=0.1
 ARCHIVE=$(NAME)-$(VERSION)
