@@ -1,11 +1,12 @@
 #include "../include/algo.hpp"
+#include "data.hpp"
 #include <vector>
 
-algo::algo(std::vector<bool> i_gen, int offset)
+algo::algo(std::vector<bool>& iGen, int offset)
 {
-	p_gen = i_gen;
+	pGen = iGen;
 	width = offset;
-	height = p_gen.size() / width;
+	height = pGen.size() / width;
 }
 
 algo::~algo()
@@ -13,10 +14,18 @@ algo::~algo()
 
 }
 
-int algo::next_gen(std::vector<bool>& n_gen)
+int algo::nextGen(std::vector<bool>& nGen)
 {
-	int value = 0;
-	for (unsigned pos = 0; pos < p_gen.size(); pos++) {
-		
-	}
+	
 }
+
+int algo::fill(bool *pRow, bool *tRow, bool *nRow)
+{
+
+}
+
+int algo::islife(bool *pRow, bool *tRow, bool *nRow)
+{
+
+}
+

@@ -3,17 +3,23 @@
 
 class algo {
 	/*previous generation*/
-	std::vector<bool> p_gen;
+	struct focus {
+		bool p[3];
+		bool t[3];
+		bool n[3];
+	};
+	std::vector<bool> pGen;
 	int width;
 	int height;
 public:
-	algo (const std::vector<bool>& i_gen, int width);
+	algo (const std::vector<bool>& iGen, int offset);
 	~algo ();
 	
 	/*returns the next generation to the referenced vector*/
-	int next_gen(std::vector<bool>& n_gen); 
+	int nextGen(std::vector<bool>& nGen); 
 
 private:
-	/* data */
+	int islife(bool *pRow, bool *tRow, bool *nRow);
+	int fill(bool *pRow, bool *tRow, bool *nRow);
 };
 #endif
