@@ -33,6 +33,7 @@ int algo::nextGen(std::vector<bool>& nGen)
 			); 
 		}
 	}
+	return 0;
 
 }
 
