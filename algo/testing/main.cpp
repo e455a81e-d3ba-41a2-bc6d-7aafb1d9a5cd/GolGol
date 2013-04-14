@@ -16,8 +16,8 @@ int main(int argc, const char *argv[])
 		test[i] = 1;
 	}
 	
-	algo generations = new algo(std::vector<bool>& test);
-	generations.nextGen(std::vector<bool>& out);
+	algo *generations = new algo(test, width);
+	generations->nextGen(out);
 
 	return EXIT_SUCCESS;
 }
