@@ -4,7 +4,6 @@ algo::algo(const std::vector<bool>& iGen, int offset)
 {
 	pGen = iGen;
 	width = offset;
-	lense.ready = 0;
 }
 
 algo::~algo()

@@ -7,7 +7,6 @@
 class algo {
 	std::vector<bool> pGen;
 	int width;
-	struct focus lense;
 public:
 	algo (const std::vector<bool>& iGen, int offset);
 	~algo ();

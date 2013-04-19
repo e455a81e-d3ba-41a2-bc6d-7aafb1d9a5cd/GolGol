@@ -17,7 +17,9 @@ int main(int argc, const char *argv[])
 
 	test[45] = 1;
 	test[46] = 1;
-	test[47] = 1;
+	test[34] = 1;
+	test[35] = 1;
+	test[24] = 1;
 	
 	algo *generations = new algo(test, width);
 	generations->nextGen(out);
