@@ -4,7 +4,6 @@ algo::algo(const std::vector<bool>& iGen, int offset)
 {
 	pGen = iGen;
 	width = offset;
-	height = pGen.size() / width;
 	lense.ready = 0;
 }
 
@@ -15,65 +14,45 @@ algo::~algo()
 
 int algo::nextGen(std::vector<bool>& nGen)
 {
-	for (int i = 0; i < 3; i++) {
-		lense.p[i] = pGen[0 + i];
-		lense.t[i] = pGen[width + 1 + i];
-		lense.n[i] = pGen[width * 2 + 1 + i];
-	}
-	lense.ready = 1;
-
-	for (int i = 0; i < height; i++) {
-		for (int j = 0; j < width; j++) {
-			nGen[i * width + j] = islife();
-
-			fill(
-				pGen[i * width + j], 
-				pGen[(i + 1) * width +j], 
-				pGen[(i + 2) * width + j]
-			); 
+	int cellSet, row, col, life;
+	for (row = 0; row < width; row++) {
+		for (col = 0; col < width; col++) {
+			life = islife(row, col, width);
+			cellSet = pGen[width * row + col];
+			if (cellSet) {
+				if((life > 3) || (life < 2)) {
+					nGen[width * row + col] = 0;
+				} else {
+					nGen[width * row + col] = 1;
+				}
+			} else {
+				if(life == 3) {
+					nGen[width * row + col] = 1;
+				} else {
+					nGen[width * row + col] = 0;
+				}
+			}
 		}
 	}
 	return 0;
 
 }
 
-int algo::fill(bool pRow, bool tRow, bool nRow)
+int algo::islife(int row, int col, int size)
 {
-	switch(lense.ready) {
-	case 0:
-		return -1;
-	case 1:
-		lense.p[0] = lense.p[1];
-		lense.p[1] = lense.p[2];
-		lense.p[2] = pRow;
+	int x, y, a = 0;
+	for(x = row - 1; x <= (row + 1); x++) {
 
-		lense.t[0] = lense.t[1];
-		lense.t[1] = lense.t[2];
-		lense.t[2] = tRow;
+		for(y = col - 1; y <= (col + 1); y++) {
 
-		lense.n[0] = lense.n[1];
-		lense.n[1] = lense.n[2];
-		lense.n[2] = nRow; /*kill me*/
-
-		break;
+			if ((x == row) && (y== col)) {
+				continue;
+			}
+			if ((y < size) && (x < size) && (x>=0) && (y>=0)) {
+				a += (int)pGen[size * x + y];
+			}
+		}
 	}
-
-}
-
-bool algo::islife()
-{
-	int result = 0;
-
-	for (int i = 0; i < 3; i++) {
-		result += (lense.p[i] + lense.t[i]+ lense.n[i]);
-	}
-
-	if (result < 2) {
-		return 0;
-	} else if (result <=3) {
-		return 1;
-	} else {
-		return 0;
-	}
+	return a;
 }
 

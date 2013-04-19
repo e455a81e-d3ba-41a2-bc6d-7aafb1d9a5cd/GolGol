@@ -6,7 +6,7 @@ LFLAGS =
 VERSION = 1.0
 ARCHIVE = $(NAME)-$(VERSION)
 
-SRC = testing/main.cpp
+SRC = testing/main.cpp algo.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(SRC) $(NAME)
