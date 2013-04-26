@@ -3,6 +3,7 @@
 #include <QPixmap>
 #include <QPainter>
 #include <QResizeEvent>
+#include <QMouseEvent>
 #include <cstdio>
 #include <cstdlib>
 
@@ -15,7 +16,7 @@ Field::Field(QWidget *parent) :
 	try {
 		mArea = new QPixmap(width, height);
 		mArea->fill(Qt::white);
-	} catch (...) {
+	} catch (std::bad_alloc) {
 		FILE* f = fopen("error.log", "w");
 
 		if (!f) {
@@ -24,7 +25,17 @@ Field::Field(QWidget *parent) :
 		fprintf(f, "Failed to allocate memory\n\tFile: %s\n\tLine: %d\n", __FILE__, __LINE__);
 		fclose(f);
 		exit(EXIT_FAILURE);
+	} catch (...) {
+		FILE* f = fopen("error.log", "w");
+
+		if (!f) {
+			exit(EXIT_FAILURE);
+		}
+		fprintf(f, "Unknown exception encountered\n\tFile: %s\n\tLine: %d\n", __FILE__, __LINE__);
+		fclose(f);
+		exit(EXIT_FAILURE);
 	}
+
 	if (!mArea) {
 		FILE* f = fopen("error.log", "w");
 
@@ -58,13 +69,32 @@ void Field::resizeEvent(QResizeEvent *event)
 		delete mArea;
 		mArea = new QPixmap(width, height);
 		*mArea = tmp.scaled(width, height);
-	} catch (...) {
+	} catch (std::bad_alloc) {
 		FILE* f = fopen("error.log", "w");
 
 		if (!f) {
 			exit(EXIT_FAILURE);
 		}
 		fprintf(f, "Failed to allocate memory\n\tFile: %s\n\tLine: %d\n", __FILE__, __LINE__);
+		fclose(f);
+		exit(EXIT_FAILURE);
+	} catch (...) {
+		FILE* f = fopen("error.log", "w");
+
+		if (!f) {
+			exit(EXIT_FAILURE);
+		}
+		fprintf(f, "Unknown exception encountered\n\tFile: %s\n\tLine: %d\n", __FILE__, __LINE__);
+		fclose(f);
+		exit(EXIT_FAILURE);
+	}
+	if (!mArea) {
+		FILE* f = fopen("error.log", "w");
+
+		if (!f) {
+			exit(EXIT_FAILURE);
+		}
+		fprintf(f, "Null pointer encountered\n\tFile: %s\n\tLine: %d\n", __FILE__, __LINE__);
 		fclose(f);
 		exit(EXIT_FAILURE);
 	}
