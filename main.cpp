@@ -3,11 +3,10 @@
 
 int main (int argc, char** argv)
 {
-    QApplication app (argc, argv);
+	QApplication app (argc, argv);
 
-    MainWindow window;
-    window.setFixedSize(640, 480);
-    window.show();
+	MainWindow window;
+	window.show();
 
-    return app.exec();
+	return app.exec();
 }
