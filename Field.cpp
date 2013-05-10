@@ -181,4 +181,10 @@ void Field::reset()
 {
 	qDebug() << "reset";
 	mState = RESET;
+	mArea->fill(Qt::white);
+	repaint();
+	for (int i = (int) 0, size = (int) mField.size(); i < size; i++) {
+		mField[i] = false;
+	}
+	mState = NONE;
 }
