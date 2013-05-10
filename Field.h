@@ -10,6 +10,11 @@ class Field : public QWidget
 {
 	Q_OBJECT
 	QPixmap *mArea;
+	std::vector<bool> mField;
+	unsigned mFieldWidth;
+	unsigned mFieldHeight;
+	const unsigned cmPixelSize;
+	bool mMouseDown;
 
 public:
 	explicit Field(QWidget *parent = 0);
@@ -30,6 +35,7 @@ protected:
 	void paintEvent (QPaintEvent *event);
 	void mousePressEvent(QMouseEvent *event);
 	void mouseReleaseEvent(QMouseEvent *event);
+	void mouseMoveEvent(QMouseEvent *event);
 
 private:
 	State mState;
