@@ -12,6 +12,8 @@ Field::Field(QWidget *parent) :
 {
 	int height = size().height();
 	int width = size().width();
+	qDebug() << "Width: " << width;
+	qDebug() << "Height: " << height;
 
 	try {
 		mArea = new QPixmap(width, height);
@@ -45,7 +47,7 @@ Field::Field(QWidget *parent) :
 		if (!f) {
 			exit(EXIT_FAILURE);
 		}
-		fprintf(f, "\nNull pointer encountered\n\tFile: %s\n\tLine: %d\n\tDate:%s\n", __FILE__, __LINE__, __DATE__);
+		fprintf(f, "Null pointer encountered\n\tFile: %s\n\tLine: %d\n\tDate:%s %s\n", __FILE__, __LINE__, __DATE__, __TIME__);
 		fclose(f);
 		exit(EXIT_FAILURE);
 	}
@@ -79,13 +81,13 @@ void Field::resizeEvent(QResizeEvent *event)
 		mFieldHeight = height / cmPixelSize;
 
 		qDebug() << "mField.size(): " << (width * height) / (cmPixelSize * cmPixelSize);
-	} catch (std::bad_alloc) {
+	} catch (std::bad_alloc e) {
 		FILE* f = fopen("error.log", "w");
 
 		if (!f) {
 			exit(EXIT_FAILURE);
 		}
-		fprintf(f, "Failed to allocate memory\n\tFile: %s\n\tLine: %d\n", __FILE__, __LINE__);
+		fprintf(f, "\n%s\nFailed to allocate memory\n\tFile: %s\n\tLine: %d\n\tDate:%s %s\n", e.what(), __FILE__, __LINE__, __DATE__, __TIME__);
 		fclose(f);
 		exit(EXIT_FAILURE);
 	} catch (...) {
@@ -94,7 +96,7 @@ void Field::resizeEvent(QResizeEvent *event)
 		if (!f) {
 			exit(EXIT_FAILURE);
 		}
-		fprintf(f, "Unknown exception encountered\n\tFile: %s\n\tLine: %d\n", __FILE__, __LINE__);
+		fprintf(f, "\nUnknown exception encountered\n\tFile: %s\n\tLine: %d\n\tDate:%s %s\n", __FILE__, __LINE__, __DATE__, __TIME__);
 		fclose(f);
 		exit(EXIT_FAILURE);
 	}
@@ -104,7 +106,7 @@ void Field::resizeEvent(QResizeEvent *event)
 		if (!f) {
 			exit(EXIT_FAILURE);
 		}
-		fprintf(f, "Null pointer encountered\n\tFile: %s\n\tLine: %d\n", __FILE__, __LINE__);
+		fprintf(f, "Null pointer encountered\n\tFile: %s\n\tLine: %d\n\tDate:%s %s\n", __FILE__, __LINE__, __DATE__, __TIME__);
 		fclose(f);
 		exit(EXIT_FAILURE);
 	}
@@ -139,15 +141,20 @@ void Field::mouseMoveEvent(QMouseEvent *event)
 		QPainter painter(mArea);
 		int x = event->x();
 		int y = event->y();
-		int adjX = x / cmPixelSize;
-		int adjY = y / cmPixelSize;
-		QRect rect(adjX * cmPixelSize, adjY * cmPixelSize, cmPixelSize, cmPixelSize);
-		mField[adjY * mFieldWidth + adjY] = true;
-		painter.fillRect(rect, Qt::black);
-		painter.drawRect(rect);
+		if (x < 0 || y < 0 || x >= mFieldWidth * cmPixelSize || y >= mFieldHeight * cmPixelSize) {
+			mMouseDown = false;
+		} else {
+			int adjX = x / cmPixelSize;
+			int adjY = y / cmPixelSize;
+			QRect rect(adjX * cmPixelSize, adjY * cmPixelSize, cmPixelSize, cmPixelSize);
+			mField[adjY * mFieldWidth + adjX] = true;
+			painter.setPen(Qt::black);
+			painter.fillRect(rect, QBrush(Qt::black));
+			painter.drawRect(rect);
 
-		qDebug() << "adjX: " << adjX;
-		qDebug() << "ajdY: " << adjY;
+			qDebug() << "adjX: " << adjX;
+			qDebug() << "ajdY: " << adjY;
+		}
 	}
 }
 
