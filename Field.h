@@ -40,6 +40,8 @@ protected:
 private:
 	State mState;
 
+	void nextFrame();
+
 signals:
     
 public slots:

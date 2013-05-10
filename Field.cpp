@@ -1,4 +1,5 @@
 #include "Field.h"
+#include "include/algo.hpp"
 #include <QDebug>
 #include <QPixmap>
 #include <QPainter>
@@ -159,6 +160,27 @@ void Field::mouseMoveEvent(QMouseEvent *event)
 	}
 }
 
+void Field::nextFrame()
+{
+	QPainter painter(mArea);
+	for (int i = 0, size = (int) mField.size(); i < size; i++) {
+		int adjX = i % mFieldWidth;
+		int adjY = i / mFieldHeight;
+		if (mField[i]) {
+			QRect rect(adjX * cmPixelSize, adjY * cmPixelSize, cmPixelSize, cmPixelSize);
+			painter.setPen(Qt::black);
+			painter.fillRect(rect, Qt::black);
+			painter.drawRect(rect);
+		} else {
+			QRect rect(adjX * cmPixelSize, adjY * cmPixelSize, cmPixelSize, cmPixelSize);
+			painter.setPen(Qt::white);
+			painter.fillRect(rect, Qt::white);
+			painter.drawRect(rect);
+		}
+	}
+	repaint();
+}
+
 void Field::play()
 {
 	qDebug() << "play";
@@ -174,7 +196,17 @@ void Field::pause()
 void Field::step()
 {
 	qDebug() << "step";
+	std::vector<bool> save = mField;
+	algo a(mField, mFieldWidth);
+	State state = mState;
 	mState = STEP;
+
+	if (!a.nextGen(mField)) {
+		nextFrame();
+	} else {
+		mField = save;
+	}
+	mState = state;
 }
 
 void Field::reset()
