@@ -47,7 +47,7 @@ Field::Field(QWidget *parent) :
 		if (!f) {
 			exit(EXIT_FAILURE);
 		}
-		fprintf(f, "Null pointer encountered\n\tFile: %s\n\tLine: %d\n\tDate:%s %s\n", __FILE__, __LINE__, __DATE__, __TIME__);
+		fprintf(f, "\nNull pointer encountered\n\tFile: %s\n\tLine: %d\n\tDate:%s %s\n", __FILE__, __LINE__, __DATE__, __TIME__);
 		fclose(f);
 		exit(EXIT_FAILURE);
 	}
@@ -106,7 +106,7 @@ void Field::resizeEvent(QResizeEvent *event)
 		if (!f) {
 			exit(EXIT_FAILURE);
 		}
-		fprintf(f, "Null pointer encountered\n\tFile: %s\n\tLine: %d\n\tDate:%s %s\n", __FILE__, __LINE__, __DATE__, __TIME__);
+		fprintf(f, "\nNull pointer encountered\n\tFile: %s\n\tLine: %d\n\tDate:%s %s\n", __FILE__, __LINE__, __DATE__, __TIME__);
 		fclose(f);
 		exit(EXIT_FAILURE);
 	}
@@ -149,8 +149,9 @@ void Field::mouseMoveEvent(QMouseEvent *event)
 			QRect rect(adjX * cmPixelSize, adjY * cmPixelSize, cmPixelSize, cmPixelSize);
 			mField[adjY * mFieldWidth + adjX] = true;
 			painter.setPen(Qt::black);
-			painter.fillRect(rect, QBrush(Qt::black));
+			painter.fillRect(rect, Qt::black);
 			painter.drawRect(rect);
+			repaint();
 
 			qDebug() << "adjX: " << adjX;
 			qDebug() << "ajdY: " << adjY;
