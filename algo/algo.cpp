@@ -33,25 +33,47 @@ int algo::nextGen(std::vector<bool>& nGen)
 			}
 		}
 	}
+	pGen = nGen;
 	return 0;
 
 }
 
-int algo::islife(int row, int col, int size)
+int algo::islife(int row, int col, int width)
 {
 	int x, y, a = 0;
+	int nx, ny;
 	for(x = row - 1; x <= (row + 1); x++) {
 
 		for(y = col - 1; y <= (col + 1); y++) {
 
+			nx = x;
+			ny = y;
+
 			if ((x == row) && (y== col)) {
 				continue;
 			}
-			if ((y < size) && (x < size) && (x>=0) && (y>=0)) {
-				a += (int)pGen[size * x + y];
+
+			if ((y < width) && (x < width) && (x>=0) && (y>=0)) {
+				a += (int)pGen[width * x + y];
+			} else {
+			
+				if (x >= width) {
+					nx = x - width;
+				} else if (x<0) {
+					nx = x + width;
+				}
+
+
+				if (y >= width) {
+					ny = y - width;
+				} else if (y<0)
+				{
+					ny = y + width;
+				}
+				a += (int)pGen[width * nx + ny];
 			}
+
 		}
 	}
 	return a;
 }
-
